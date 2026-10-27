@@ -13,13 +13,13 @@ export const NAV_LINKS: NavLink[] = [
   { label: "About", href: "/about" },
   {
     label: "GitHub",
-    href: "https://github.com/navinsh",
+    href: "https://github.com/sshnavin",
     external: true,
     icon: GitHubIcon,
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/navinsh",
+    href: "https://linkedin.com/in/sshnavin",
     external: true,
     icon: LinkedInIcon,
   },
