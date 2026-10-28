@@ -1,8 +1,8 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { siteConfig } from "@/config/site"
 import { postSlugs, getPostBySlug } from "@/lib/posts"
 import { PostHeader } from "@/components/posts/post-header"
-import { useMDXComponents } from "@/mdx-components"
 
 // ---------------------------------------------------------------------------
 // Static params — one route per registered post, required for output: 'export'
@@ -24,13 +24,18 @@ export async function generateMetadata({
   if (!mod) return {}
 
   const { title, description, publishedAt } = mod.metadata
+  const url = `${siteConfig.url}/posts/${slug}`
   return {
     title,
     description,
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
       type: "article",
       title,
       description,
+      url,
       publishedTime: publishedAt,
     },
   }

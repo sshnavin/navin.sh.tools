@@ -19,7 +19,7 @@ function IntroSection() {
 
       <div className="mt-5 flex items-center gap-4">
         <Link
-          href="https://github.com/navinsh"
+          href="https://github.com/sshnavin"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"
@@ -28,7 +28,7 @@ function IntroSection() {
           GitHub
         </Link>
         <Link
-          href="https://linkedin.com/in/navinsh"
+          href="https://linkedin.com/in/sshnavin"
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 text-xs text-muted-foreground transition-colors hover:text-foreground"

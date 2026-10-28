@@ -1,4 +1,5 @@
 import type { Metadata } from "next"
+import { siteConfig } from "@/config/site"
 import { getAllPosts } from "@/lib/posts"
 import { PostList } from "@/components/posts/post-list"
 
@@ -6,6 +7,9 @@ export const metadata: Metadata = {
   title: "Writing",
   description:
     "Notes on frontend engineering, architecture and things I learn along the way.",
+  alternates: {
+    canonical: `${siteConfig.url}/posts`,
+  },
 }
 
 export default async function PostsPage() {

@@ -1,5 +1,6 @@
 import * as React from "react"
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
+import { siteConfig } from "@/config/site"
 
 export interface NavLink {
   label: string
@@ -9,17 +10,18 @@ export interface NavLink {
 }
 
 export const NAV_LINKS: NavLink[] = [
+  { label: "Tools", href: "/tools" },
   { label: "Posts", href: "/posts" },
   { label: "About", href: "/about" },
   {
     label: "GitHub",
-    href: "https://github.com/sshnavin",
+    href: siteConfig.links.github,
     external: true,
     icon: GitHubIcon,
   },
   {
     label: "LinkedIn",
-    href: "https://linkedin.com/in/sshnavin",
+    href: siteConfig.links.linkedin,
     external: true,
     icon: LinkedInIcon,
   },

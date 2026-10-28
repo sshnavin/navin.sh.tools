@@ -7,6 +7,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { siteConfig } from "@/config/site"
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { MobileNav } from "@/components/layout/mobile-nav"
 import { PageContainer } from "@/components/layout/page-container"
@@ -55,7 +56,7 @@ function SiteHeader() {
                   <TooltipTrigger
                     render={
                       <Link
-                        href="https://github.com/navinsh"
+                        href={siteConfig.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="GitHub"
@@ -72,7 +73,7 @@ function SiteHeader() {
                   <TooltipTrigger
                     render={
                       <Link
-                        href="https://linkedin.com/in/navinsh"
+                        href={siteConfig.links.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
                         aria-label="LinkedIn"

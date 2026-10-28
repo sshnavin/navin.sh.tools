@@ -3,10 +3,9 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 import { SearchIcon } from "lucide-react"
-import { Dialog as DialogPrimitive } from "@base-ui/react/dialog"
-import { cn } from "cn"
 import {
-    Command, CommandDialog,
+    Command,
+    CommandDialog,
     CommandEmpty,
     CommandGroup,
     CommandInput,
@@ -15,6 +14,7 @@ import {
 } from "@/components/ui/command"
 import { ToolIcon } from "@/components/tools/tool-icon"
 import { categoryMap } from "@/lib/tools/categories"
+import { trackEvent } from "@/lib/analytics"
 import type { ToolDefinition } from "@/lib/tools/types"
 
 // ---------------------------------------------------------------------------
@@ -43,6 +43,7 @@ function ToolCommand({ tools, open, onOpenChange }: ToolCommandProps) {
   const router = useRouter()
 
   function handleSelect(slug: string) {
+    trackEvent({ name: "tool_open", tool_slug: slug, source: "command_palette" })
     onOpenChange(false)
     router.push(`/tools/${slug}`)
   }

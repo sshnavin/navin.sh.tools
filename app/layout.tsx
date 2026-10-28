@@ -1,7 +1,9 @@
 import type { Metadata } from "next"
 import { Geist_Mono, Noto_Sans } from "next/font/google"
+import { GoogleAnalytics } from "@next/third-parties/google"
 
 import "./globals.css"
+import { siteConfig } from "@/config/site"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from "@/components/layout/site-header"
 import { SiteFooter } from "@/components/layout/site-footer"
@@ -16,33 +18,33 @@ const fontMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-    metadataBase: new URL("https://navin.sh"),
+    metadataBase: new URL(siteConfig.url),
+    applicationName: siteConfig.name,
     title: {
-        default: "Navin Singh",
-        template: "%s · navin.sh",
+        default: siteConfig.defaultTitle,
+        template: siteConfig.titleTemplate,
     },
-    description:
-        "Personal website of Navin Singh — developer, writing, and tools.",
+    description: siteConfig.description,
     openGraph: {
         type: "website",
         locale: "en_US",
-        url: "https://navin.sh",
-        siteName: "navin.sh",
-        title: "Navin Singh",
-        description:
-            "Personal website of Navin Singh — developer, writing, and tools.",
+        url: siteConfig.url,
+        siteName: siteConfig.name,
+        title: siteConfig.defaultTitle,
+        description: siteConfig.description,
     },
     twitter: {
         card: "summary",
-        title: "Navin Singh",
-        description:
-            "Personal website of Navin Singh — developer, writing, and tools.",
+        title: siteConfig.defaultTitle,
+        description: siteConfig.description,
     },
     robots: {
         index: true,
         follow: true,
     },
 }
+
+const gaMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
 export default function RootLayout({
     children,
@@ -71,6 +73,7 @@ export default function RootLayout({
                     </div>
                 </ThemeProvider>
             </body>
+            {gaMeasurementId && <GoogleAnalytics gaId={gaMeasurementId} />}
         </html>
     )
 }

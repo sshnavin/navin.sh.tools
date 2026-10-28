@@ -6,6 +6,7 @@ import { CategoryFilter, ALL_CATEGORY } from "@/components/tools/category-filter
 import type { FilterValue } from "@/components/tools/category-filter"
 import { ToolGrid } from "@/components/tools/tool-grid"
 import { searchTools } from "@/lib/tools/search"
+import { trackEvent } from "@/lib/analytics"
 import type { CategoryDefinition } from "@/lib/tools/categories"
 import type { ToolDefinition } from "@/lib/tools/types"
 
@@ -50,6 +51,20 @@ function ToolBrowser({ tools, categories }: ToolBrowserProps) {
   }
 
   const hasActiveFilter = query.trim() !== "" || selected !== ALL_CATEGORY
+
+  // Fire a search analytics event after the user pauses typing (600 ms).
+  // Only fires for non-empty queries to avoid noise.
+  React.useEffect(() => {
+    if (query.trim() === "") return
+    const timer = setTimeout(() => {
+      trackEvent({
+        name: "tool_search",
+        query: query.trim(),
+        result_count: visibleTools.length,
+      })
+    }, 600)
+    return () => clearTimeout(timer)
+  }, [query, visibleTools.length])
 
   return (
     <div className="space-y-4">

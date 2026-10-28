@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { MonitorSmartphone } from "lucide-react"
 import { ToolIcon } from "@/components/tools/tool-icon"
+import { ToolViewTracker } from "@/components/tools/tool-view-tracker"
 import { RelatedTools } from "@/components/tools/related-tools"
 import { categoryMap } from "@/lib/tools/categories"
 import type { ToolDefinition } from "@/lib/tools/types"
@@ -36,6 +37,10 @@ function ToolPageLayout({ tool, children }: ToolPageLayoutProps) {
 
   return (
     <div className="py-8 sm:py-12">
+      {/* Fires a tool_open analytics event on mount when the user lands     */}
+      {/* directly on this page (bookmark, search engine, shared link, etc.) */}
+      <ToolViewTracker toolSlug={tool.slug} />
+
       {/* ------------------------------------------------------------------ */}
       {/* Breadcrumb                                                          */}
       {/* ------------------------------------------------------------------ */}

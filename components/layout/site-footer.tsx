@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { cn } from "cn"
 import { GitHubIcon, LinkedInIcon } from "@/components/icons"
+import { siteConfig } from "@/config/site"
 import { PageContainer } from "@/components/layout/page-container"
 
 const YEAR = new Date().getFullYear()
@@ -15,12 +16,12 @@ function SiteFooter({ className }: SiteFooterProps) {
       <PageContainer>
         <div className="flex h-14 items-center justify-between gap-4">
           <p className="text-xs text-muted-foreground">
-            &copy; {YEAR} Navin Singh
+            &copy; {YEAR} {siteConfig.author}
           </p>
 
           <div className="flex items-center gap-1">
             <Link
-              href="https://github.com/navinsh"
+              href={siteConfig.links.github}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="GitHub"
@@ -29,7 +30,7 @@ function SiteFooter({ className }: SiteFooterProps) {
               <GitHubIcon className="size-4" />
             </Link>
             <Link
-              href="https://linkedin.com/in/navinsh"
+              href={siteConfig.links.linkedin}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"

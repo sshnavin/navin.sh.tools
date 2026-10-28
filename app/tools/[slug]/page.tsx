@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { notFound } from "next/navigation"
+import { siteConfig } from "@/config/site"
 import { tools, getToolBySlug } from "@/lib/tools/registry"
 import { ToolPageLayout } from "@/components/tools/tool-page-layout"
 
@@ -35,7 +36,7 @@ export async function generateMetadata({
 
   if (!tool) return {}
 
-  const url = `https://navin.sh/tools/${tool.slug}`
+  const url = `${siteConfig.url}/tools/${tool.slug}`
 
   return {
     title: tool.name,

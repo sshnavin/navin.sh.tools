@@ -6,16 +6,8 @@ import { cn } from "cn"
 import { Button } from "@/components/ui/button"
 import { Kbd, KbdGroup } from "@/components/ui/kbd"
 import { ToolCommand } from "@/components/search/tool-command"
+import { trackEvent } from "@/lib/analytics"
 import { tools } from "@/lib/tools/registry"
-import {
-    Command,
-    CommandDialog,
-    CommandEmpty,
-    CommandGroup,
-    CommandInput,
-    CommandItem,
-    CommandList
-} from "@/components/ui/command";
 
 // ---------------------------------------------------------------------------
 // ToolSearchTrigger
@@ -38,7 +30,12 @@ function ToolSearchTrigger() {
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault()
-        setOpen((prev) => !prev)
+        setOpen((prev) => {
+          if (!prev) {
+            trackEvent({ name: "command_palette_open", trigger: "keyboard_shortcut" })
+          }
+          return !prev
+        })
       }
     }
 

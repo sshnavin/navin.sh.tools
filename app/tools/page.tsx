@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import { ShieldCheck } from "lucide-react"
+import { siteConfig } from "@/config/site"
 import { tools } from "@/lib/tools/registry"
 import { categories } from "@/lib/tools/categories"
 import type { ToolCategory } from "@/lib/tools/types"
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   description:
     "Free browser-based tools for developers and everyday tasks. Format JSON, convert units, work with PDFs, compress images and more. Fast, private and processed locally.",
   alternates: {
-    canonical: "https://navin.sh/tools",
+    canonical: `${siteConfig.url}/tools`,
   },
 }
 

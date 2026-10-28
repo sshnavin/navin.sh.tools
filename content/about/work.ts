@@ -23,6 +23,6 @@ export const work: WorkItem[] = [
     description:
       "This site — a personal space for writing, tools and experiments. Built with Next.js, Tailwind CSS and shadcn/ui.",
     technologies: ["Next.js", "Tailwind CSS", "TypeScript"],
-    url: "https://github.com/navinsh",
+    url: "https://github.com/sshnavin",
   },
 ]
