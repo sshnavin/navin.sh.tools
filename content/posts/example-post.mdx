@@ -1,0 +1,79 @@
+export const metadata = {
+  title: "Example post",
+  description: "A temporary placeholder post to test the MDX blog setup.",
+  publishedAt: "2025-01-15",
+  tags: ["Meta"],
+}
+
+This is a placeholder post added to verify that the MDX blog system is working end-to-end. It should be replaced with real content before the site goes live.
+
+---
+
+## What this tests
+
+This post exercises the full post pipeline:
+
+- The `content/posts/` directory as a content source
+- Metadata exported directly from MDX
+- The post registry in `lib/posts.ts`
+- `getAllPosts()` and `getPostBySlug()`
+- The `/posts` listing page
+- The `/posts/[slug]` dynamic route
+- Static generation via `generateStaticParams()`
+- MDX component overrides from `mdx-components.tsx`
+
+## Typography
+
+Paragraph text is rendered in a comfortable reading width with relaxed line height. **Bold** and _italic_ text are rendered using standard markdown syntax.
+
+### Inline code
+
+Refer to `getAllPosts()` or access a specific post with `getPostBySlug(slug)`.
+
+### Code block
+
+```typescript
+// lib/posts.ts
+export async function getAllPosts(): Promise<PostEntry[]> {
+  const entries = await Promise.all(
+    postSlugs.map(async (slug) => {
+      const mod = await postImports[slug]()
+      return { slug, metadata: mod.metadata }
+    })
+  )
+
+  return entries.sort(
+    (a, b) =>
+      new Date(b.metadata.publishedAt).getTime() -
+      new Date(a.metadata.publishedAt).getTime()
+  )
+}
+```
+
+### Blockquote
+
+> Delete this file and the corresponding registry entry in `lib/posts.ts` once real content exists.
+
+### Lists
+
+Ordered:
+
+1. Create an MDX file in `content/posts/`
+2. Add the slug and import to the registry in `lib/posts.ts`
+3. Export `metadata` from the MDX file
+
+Unordered:
+
+- `title` — required
+- `description` — required
+- `publishedAt` — ISO date string (`YYYY-MM-DD`)
+- `tags` — string array
+
+### Table
+
+| Field         | Type       | Required |
+| ------------- | ---------- | -------- |
+| title         | `string`   | Yes      |
+| description   | `string`   | Yes      |
+| publishedAt   | `string`   | Yes      |
+| tags          | `string[]` | Yes      |
