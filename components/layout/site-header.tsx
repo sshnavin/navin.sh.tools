@@ -27,12 +27,14 @@ function SiteHeader() {
             navin.sh
           </Link>
 
-          {/* Desktop navigation */}
           <nav
             className="hidden items-center gap-0.5 md:flex"
             aria-label="Main navigation"
           >
             <TooltipProvider>
+              <Link href="/tools" className={navItemClass}>
+                Tools
+              </Link>
               <Link href="/posts" className={navItemClass}>
                 Posts
               </Link>
@@ -82,7 +84,6 @@ function SiteHeader() {
             <ThemeToggle />
           </nav>
 
-          {/* Mobile: theme toggle + hamburger */}
           <div className="flex items-center gap-1 md:hidden">
             <ThemeToggle />
             <MobileNav />
