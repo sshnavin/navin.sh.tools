@@ -61,6 +61,7 @@ function sizeOf(input: string): "small" | "medium" | "large" {
 function JsonFormatter() {
   const [input, setInput] = React.useState("")
   const [output, setOutput] = React.useState("")
+  const [outputMode, setOutputMode] = React.useState<"formatted" | "minified">("formatted")
   const [indentation, setIndentation] = React.useState<JsonIndentation>(2)
   const [validation, setValidation] = React.useState<ValidationState>({
     status: "idle",
@@ -84,6 +85,7 @@ function JsonFormatter() {
 
     if (result.success) {
       setOutput(result.value)
+      setOutputMode("formatted")
       setValidation(
         input.trim() === "" ? { status: "idle" } : { status: "valid" }
       )
@@ -118,6 +120,7 @@ function JsonFormatter() {
 
     if (result.success) {
       setOutput(result.value)
+      setOutputMode("minified")
       setValidation(
         input.trim() === "" ? { status: "idle" } : { status: "valid" }
       )
@@ -160,6 +163,7 @@ function JsonFormatter() {
   function handleClear() {
     setInput("")
     setOutput("")
+    setOutputMode("formatted")
     setValidation({ status: "idle" })
     setCopied(false)
   }
@@ -174,6 +178,7 @@ function JsonFormatter() {
     const result = formatJson(EXAMPLE_JSON, indentation)
     if (result.success) {
       setOutput(result.value)
+      setOutputMode("formatted")
       setValidation({ status: "valid" })
     }
   }
@@ -214,7 +219,7 @@ function JsonFormatter() {
           onChange={setInput}
           onFormat={handleFormat}
         />
-        <JsonOutputPanel value={output} />
+        <JsonOutputPanel value={output} outputMode={outputMode} />
       </div>
 
       {/* Keyboard hint */}

@@ -21,6 +21,8 @@ interface JsonInputPanelProps {
 
 interface JsonOutputPanelProps {
   value: string
+  /** Controls how the output is rendered. Minified output shows a plain pre. */
+  outputMode: "formatted" | "minified"
 }
 
 // ---------------------------------------------------------------------------
@@ -138,7 +140,7 @@ function JsonInputPanel({ value, onChange, onFormat }: JsonInputPanelProps) {
  * Uses a `<pre>` element so whitespace is preserved exactly, long lines
  * scroll horizontally within the panel rather than breaking the page layout.
  */
-function JsonOutputPanel({ value }: JsonOutputPanelProps) {
+function JsonOutputPanel({ value, outputMode }: JsonOutputPanelProps) {
   return (
     <div className="flex min-h-0 min-w-0 flex-1 flex-col gap-2">
       <span
@@ -166,12 +168,23 @@ function JsonOutputPanel({ value }: JsonOutputPanelProps) {
           "px-4 py-3",
         )}
       >
-        {value ? (
-          <JsonTreeView value={value} />
-        ) : (
+        {!value && (
           <span className="font-mono text-sm text-muted-foreground/40">
             Output will appear here…
           </span>
+        )}
+
+        {value && outputMode === "formatted" && (
+          <JsonTreeView value={value} />
+        )}
+
+        {value && outputMode === "minified" && (
+          // Plain pre — makes the compact single-line result visually obvious.
+          // word-break so a very long minified string wraps rather than
+          // forcing horizontal scroll on the whole panel.
+          <pre className="font-mono text-sm leading-relaxed text-foreground break-all whitespace-pre-wrap select-text">
+            {value}
+          </pre>
         )}
       </div>
 
