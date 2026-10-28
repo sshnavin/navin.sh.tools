@@ -3,6 +3,7 @@ import { notFound } from "next/navigation"
 import { siteConfig } from "@/config/site"
 import { tools, getToolBySlug } from "@/lib/tools/registry"
 import { ToolPageLayout } from "@/components/tools/tool-page-layout"
+import { toolImplementations } from "@/components/tools/tool-implementations"
 
 // ---------------------------------------------------------------------------
 // Static params
@@ -66,18 +67,26 @@ export default async function ToolPage({
 
   if (!tool) notFound()
 
+  const ToolComponent = toolImplementations[tool.slug]
+
   return (
     <ToolPageLayout tool={tool}>
-      {/*
-       * Placeholder — replaced with the actual interactive Client Component
-       * when each tool is implemented. The shell, header, about section and
-       * related tools are already server-rendered around this slot.
-       */}
-      <div className="flex min-h-48 items-center justify-center rounded-sm border border-dashed border-border">
-        <p className="text-sm text-muted-foreground">
-          Tool interface coming soon.
-        </p>
-      </div>
+      {ToolComponent ? (
+        // Render the interactive Client Component for implemented tools.
+        // The page shell itself remains a Server Component.
+        <ToolComponent />
+      ) : (
+        /*
+         * Placeholder — shown for tools registered in the registry but not
+         * yet implemented. Remove once each tool ships its component and
+         * adds its slug to toolImplementations.
+         */
+        <div className="flex min-h-48 items-center justify-center rounded-sm border border-dashed border-border">
+          <p className="text-sm text-muted-foreground">
+            Tool interface coming soon.
+          </p>
+        </div>
+      )}
     </ToolPageLayout>
   )
 }

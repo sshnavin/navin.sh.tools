@@ -46,17 +46,57 @@ export interface PostOpenEvent {
   post_slug: string
 }
 
-// Future tool interaction events — add here as tools are implemented:
-// export interface ToolUsedEvent { name: "tool_used"; tool_slug: string }
-// export interface ToolCompletedEvent { name: "tool_completed"; tool_slug: string }
-// export interface ToolErrorEvent { name: "tool_error"; tool_slug: string; error_type: string }
-// export interface ToolDownloadEvent { name: "tool_download"; tool_slug: string; file_type: string }
+/**
+ * Fired when a user invokes a tool action (e.g. format, minify).
+ * Never include user input, output, or any content-derived data.
+ */
+export interface ToolUsedEvent {
+  name: "tool_used"
+  /** Tool slug, e.g. "json-formatter". */
+  tool_slug: string
+  /** The specific action taken, e.g. "format" | "minify". */
+  action: string
+  /**
+   * Coarse size bucket — never an exact byte count or content sample.
+   * "small" < 1 KB, "medium" < 50 KB, "large" >= 50 KB.
+   */
+  input_size_bucket?: "small" | "medium" | "large"
+}
+
+/**
+ * Fired when a tool action succeeds.
+ * Never include user input, output, or any content-derived data.
+ */
+export interface ToolCompletedEvent {
+  name: "tool_completed"
+  /** Tool slug, e.g. "json-formatter". */
+  tool_slug: string
+  /** The specific action that completed, e.g. "format" | "minify". */
+  action: string
+}
+
+/**
+ * Fired when a tool action fails due to user input error.
+ * Never include the actual error message or any user content.
+ */
+export interface ToolErrorEvent {
+  name: "tool_error"
+  /** Tool slug, e.g. "json-formatter". */
+  tool_slug: string
+  /** The action that was attempted, e.g. "format" | "minify". */
+  action: string
+  /** Category of error — safe enumerated value, never user content. */
+  error_type: "invalid_json" | "unknown"
+}
 
 export type AnalyticsEvent =
   | ToolSearchEvent
   | ToolOpenEvent
   | CommandPaletteOpenEvent
   | PostOpenEvent
+  | ToolUsedEvent
+  | ToolCompletedEvent
+  | ToolErrorEvent
 
 // ---------------------------------------------------------------------------
 // gtag type shim

@@ -106,7 +106,7 @@ function ToolPageLayout({ tool, children }: ToolPageLayoutProps) {
       {/* PageContainer, then re-applies padding at a wider max-width.        */}
       {/* ------------------------------------------------------------------ */}
       <div className="-mx-4 sm:-mx-6 lg:-mx-8">
-        <div className="mx-auto max-w-5xl px-4 py-8 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
           {children}
         </div>
       </div>

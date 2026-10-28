@@ -23,7 +23,7 @@ export const tools: ToolDefinition[] = [
     name: "JSON Formatter",
     shortDescription: "Prettify and validate JSON with syntax highlighting.",
     description:
-      "Paste raw or minified JSON and instantly get a formatted, syntax-highlighted view. Validates structure, reports errors with line numbers, and lets you copy the result with one click.",
+      "Paste raw or minified JSON to format it with 2-space, 4-space, or tab indentation, or strip all whitespace to produce a compact single-line result. Validates structure using the browser's native JSON parser and reports clear error messages so you can pinpoint exactly what's wrong. Everything runs locally in your browser — your JSON never leaves your machine.",
     category: "developer",
     keywords: [
       "json",
