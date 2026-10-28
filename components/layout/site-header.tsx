@@ -10,6 +10,7 @@ import {
 import { ThemeToggle } from "@/components/layout/theme-toggle"
 import { MobileNav } from "@/components/layout/mobile-nav"
 import { PageContainer } from "@/components/layout/page-container"
+import { ToolSearchTrigger } from "@/components/search/tool-search-trigger"
 
 const navItemClass = buttonVariants({ variant: "ghost", size: "sm" })
 const iconItemClass = buttonVariants({ variant: "ghost", size: "icon-sm" })
@@ -27,64 +28,73 @@ function SiteHeader() {
             navin.sh
           </Link>
 
-          <nav
-            className="hidden items-center gap-0.5 md:flex"
-            aria-label="Main navigation"
-          >
-            <TooltipProvider>
-              <Link href="/tools" className={navItemClass}>
-                Tools
-              </Link>
-              <Link href="/posts" className={navItemClass}>
-                Posts
-              </Link>
-              <Link href="/about" className={navItemClass}>
-                About
-              </Link>
+          {/* Desktop: search trigger + nav */}
+          <div className="hidden items-center gap-2 md:flex">
+            <ToolSearchTrigger />
+
+            <div className="mx-1 h-4 w-px bg-border" role="separator" />
+
+            <nav
+              className="flex items-center gap-0.5"
+              aria-label="Main navigation"
+            >
+              <TooltipProvider>
+                <Link href="/tools" className={navItemClass}>
+                  Tools
+                </Link>
+                <Link href="/posts" className={navItemClass}>
+                  Posts
+                </Link>
+                <Link href="/about" className={navItemClass}>
+                  About
+                </Link>
+
+                <div className="mx-2 h-4 w-px bg-border" role="separator" />
+
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Link
+                        href="https://github.com/navinsh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="GitHub"
+                        className={iconItemClass}
+                      />
+                    }
+                  >
+                    <GitHubIcon className="size-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>GitHub</TooltipContent>
+                </Tooltip>
+
+                <Tooltip>
+                  <TooltipTrigger
+                    render={
+                      <Link
+                        href="https://linkedin.com/in/navinsh"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="LinkedIn"
+                        className={iconItemClass}
+                      />
+                    }
+                  >
+                    <LinkedInIcon className="size-4" />
+                  </TooltipTrigger>
+                  <TooltipContent>LinkedIn</TooltipContent>
+                </Tooltip>
+              </TooltipProvider>
 
               <div className="mx-2 h-4 w-px bg-border" role="separator" />
 
-              <Tooltip>
-                <TooltipTrigger
-                  render={
-                    <Link
-                      href="https://github.com/navinsh"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="GitHub"
-                      className={iconItemClass}
-                    />
-                  }
-                >
-                  <GitHubIcon className="size-4" />
-                </TooltipTrigger>
-                <TooltipContent>GitHub</TooltipContent>
-              </Tooltip>
+              <ThemeToggle />
+            </nav>
+          </div>
 
-              <Tooltip>
-                <TooltipTrigger
-                  render={
-                    <Link
-                      href="https://linkedin.com/in/navinsh"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label="LinkedIn"
-                      className={iconItemClass}
-                    />
-                  }
-                >
-                  <LinkedInIcon className="size-4" />
-                </TooltipTrigger>
-                <TooltipContent>LinkedIn</TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
-            <div className="mx-2 h-4 w-px bg-border" role="separator" />
-
-            <ThemeToggle />
-          </nav>
-
+          {/* Mobile: search icon + theme toggle + hamburger */}
           <div className="flex items-center gap-1 md:hidden">
+            <ToolSearchTrigger />
             <ThemeToggle />
             <MobileNav />
           </div>
@@ -93,5 +103,4 @@ function SiteHeader() {
     </header>
   )
 }
-
 export { SiteHeader }

@@ -64,7 +64,7 @@ export default function RootLayout({
                 <ThemeProvider>
                     <div className="flex min-h-svh flex-col">
                         <SiteHeader />
-                        <main className="flex-1 py-10">
+                        <main className="flex-1">
                             <PageContainer>{children}</PageContainer>
                         </main>
                         <SiteFooter />
