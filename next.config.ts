@@ -19,6 +19,17 @@ const nextConfig: NextConfig = {
   },
 };
 
-const withMDX = createMDX({});
+const withMDX = createMDX({
+  options: {
+    rehypePlugins: [
+      [
+        'rehype-pretty-code',
+        // {
+        //   theme: 'ayu-light',
+        // },
+      ],
+    ],
+  },
+});
 
 export default withMDX(nextConfig);

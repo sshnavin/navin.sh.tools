@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { postSlugs, getPostBySlug } from "@/lib/posts"
 import { PostHeader } from "@/components/posts/post-header"
+import { useMDXComponents } from "@/mdx-components"
 
 // ---------------------------------------------------------------------------
 // Static params — one route per registered post, required for output: 'export'

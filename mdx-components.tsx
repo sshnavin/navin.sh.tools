@@ -1,54 +1,19 @@
 import type { MDXComponents } from "mdx/types"
 import Link from "next/link"
-import { codeToHtmlHighlighted } from "@/lib/highlighter"
 
 // ---------------------------------------------------------------------------
-// Code block — async Server Component.
-// @next/mdx renders fenced code blocks as <pre><code className="language-x">…</code></pre>.
-// codeToHtmlHighlighted returns a full <pre><code>…</code></pre> HTML string
-// from Shiki, which we render with dangerouslySetInnerHTML.
-// The [&>pre] selector overrides Shiki's default inline background/color so
-// our theme tokens take effect instead.
+// Code block — synchronous Server Component.
+// rehype-pretty-code annotates the inner <code> element with data-theme and
+// emits --shiki-light / --shiki-dark CSS variables on each token <span>.
+// globals.css reads those variables and switches between them via .dark.
 // ---------------------------------------------------------------------------
-async function MDXPre({ children }: React.ComponentProps<"pre">) {
-  const codeEl =
-    children &&
-    typeof children === "object" &&
-    "props" in (children as React.ReactElement)
-      ? (children as React.ReactElement<{
-          className?: string
-          children?: string
-        }>)
-      : null
-
-  const rawCode = String(codeEl?.props?.children ?? "").replace(/\n$/, "")
-  const langClass = codeEl?.props?.className ?? ""
-  const language = langClass.replace(/^language-/, "").trim()
-
-  // const html =
-  //   rawCode && language
-  //     ? await codeToHtmlHighlighted(rawCode, language)
-  //     : null
-
-  const html =
-      rawCode && language
-          ? rawCode
-          : null
-
-  if (html) {
-    return (
-      <div
-        className="my-6 overflow-x-auto rounded-none border border-border font-mono text-sm leading-relaxed [&>pre]:bg-muted/40 [&>pre]:px-5 [&>pre]:py-4 [&>pre]:text-(--shiki-light) dark:[&>pre]:text-(--shiki-dark)"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: trusted Shiki output
-        dangerouslySetInnerHTML={{ __html: html }}
-      />
-    )
-  }
-
-  // Fallback for unrecognised languages — plain unstyled block.
+function MDXPre({ children, ...props }: React.ComponentProps<"pre">) {
   return (
-    <pre className="my-6 overflow-x-auto rounded-none border border-border bg-muted/40 px-5 py-4 font-mono text-sm leading-relaxed">
-      <code>{rawCode}</code>
+    <pre
+      {...props}
+      className="my-6 overflow-x-auto rounded-none border border-border bg-muted/40 px-5 py-4 font-mono text-sm leading-relaxed"
+    >
+      {children}
     </pre>
   )
 }
@@ -128,12 +93,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       </blockquote>
     ),
 
-    // Inline code — className is only present when nested inside a <pre> block,
-    // so we can use it to skip double-styling Shiki's output.
     code: ({ children, className }) => {
       if (className) return <code className={className}>{children}</code>
       return (
-        <code className="rounded-none border border-border bg-muted/60 px-1.5 py-0.5 font-mono text-[0.8125rem] text-foreground">
+        <code className="">
           {children}
         </code>
       )
