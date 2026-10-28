@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cn } from "cn"
+import { JsonTreeView } from "./json-tree-view"
 
 // ---------------------------------------------------------------------------
 // Types
@@ -148,32 +149,31 @@ function JsonOutputPanel({ value }: JsonOutputPanelProps) {
       </span>
 
       {/*
-       * min-h-0 on the pre prevents it from using intrinsic content height
-       * as a flex minimum. overflow-auto + h-full makes it scroll in place.
+       * Scrollable container — min-h-0 prevents intrinsic content height
+       * from defeating the fixed panel height set on the parent.
+       * The tree view scrolls within this box; it never grows the page.
        */}
-      <pre
+      <div
         role="region"
         aria-labelledby="json-output-label"
         aria-live="polite"
         aria-atomic="true"
         className={cn(
-          // Layout — fill the column, scroll internally
+          // Layout — fill the column, scroll in both axes
           "min-h-0 flex-1 overflow-auto",
-          // Typography
-          "font-mono text-sm leading-relaxed",
           // Visual
           "w-full rounded-sm border border-border bg-muted/40",
           "px-4 py-3",
-          // Long lines scroll horizontally, never wrap
-          "whitespace-pre",
-          // Accessible selection
-          "select-text",
-          // Subtle when empty
-          value ? "text-foreground" : "text-muted-foreground/40"
         )}
       >
-        {value || "Output will appear here…"}
-      </pre>
+        {value ? (
+          <JsonTreeView value={value} />
+        ) : (
+          <span className="font-mono text-sm text-muted-foreground/40">
+            Output will appear here…
+          </span>
+        )}
+      </div>
 
     </div>
   )
